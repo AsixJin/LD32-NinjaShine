@@ -18,19 +18,9 @@ public class ghost : monster {
     }
 
     // Update is called once per frame
-	void Update ()
-	{      
-		if(onLight)
-		{
-			Health -= 1;
-            this.transform.position = Floors[Random.Range(0, Floors.Count+1)].position;
-		}
-		
-		if (Health <= 0)
-		{
-			Destroy(this.gameObject);
-		}
-
+	public override void Update ()
+	{
+        base.Update();
         if (Timer >= 2f)
         {
             RBody.velocity = new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));

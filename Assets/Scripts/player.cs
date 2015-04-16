@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class player : MonoBehaviour {
 
@@ -22,9 +23,11 @@ public class player : MonoBehaviour {
     //Light Variable
     private float BTimer;
     public float energyRate = 0.01f;
+    public Slider lightMeter;
+    public Toggle shortTog;
     public bool isOn = false;
     public bool shortage = false;
-    public int shortCount = 0;
+    public float shortCount = 0;
 	public int direction;
     public float BeamLength = 1;
     public float BeamWidth = 1;
@@ -55,15 +58,10 @@ public class player : MonoBehaviour {
             FlashSwitch();
         }
 
-        if(!isOn)
-        {
-            FlashEnergy += 0.0001f;
-        }
-
         if(FlashEnergy <= 0)
         {
             FlashEnergy = 0;
-            isOn = false;
+            PowerDown();
         }
         else if(FlashEnergy >= 0.80f)
         {
@@ -111,6 +109,8 @@ public class player : MonoBehaviour {
 
     void FixedUpdate()
     {
+        lightMeter.value = FlashEnergy;
+        shortTog.isOn = shortage;
         //Time Related Light Control
         Light.color = new Color(Light.color.r, Light.color.g, Light.color.b, FlashEnergy);
         if(isOn)
@@ -142,8 +142,17 @@ public class player : MonoBehaviour {
             }
             
         }
+        else if (!isOn && !shortage)
+        {
+            FlashEnergy += 0.0001f;
+        }
+        else if(!isOn && shortage)
+        {
+            FlashEnergy -= 0.0005f;
+        }
 
-        if(shortCount == 6)
+
+        if(shortCount >= 6)
         {
             shortage = false;
             shortCount = 0;
@@ -156,12 +165,23 @@ public class player : MonoBehaviour {
         if(isOn)
         {
             theLight.SetActive(false);
-            isOn = false;        
+            isOn = false;
+            if(shortage)
+            {
+                shortCount += 0.5f;
+            }
         }
         else if(!isOn && FlashEnergy > 0)
         {
             theLight.SetActive(true);
             isOn = true;
         }
+    }
+
+    public void PowerDown()
+    {
+        theLight.SetActive(false);
+        isOn = false;
+        shortage = false;
     }
 }

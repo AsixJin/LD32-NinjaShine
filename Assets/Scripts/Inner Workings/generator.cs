@@ -13,6 +13,10 @@ public class generator : MonoBehaviour {
     public int slimeCount = 5;
     public int skullCount = 1;
     public int ghostCount = 1;
+    //Generator Switch
+    public manger Switches;
+    public int switchNum;
+    
 
 	// Use this for initialization
 	void Start () 
@@ -25,6 +29,7 @@ public class generator : MonoBehaviour {
     {
         if (slimeCount == 0 && skullCount == 0 && ghostCount == 0)
         {
+            Switches.Generators[switchNum] = false;
             Destroy(this.gameObject);
         }
         else

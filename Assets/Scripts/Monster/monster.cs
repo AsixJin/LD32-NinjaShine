@@ -17,6 +17,17 @@ public class monster : MonoBehaviour {
     public Transform target;
     public Rigidbody2D PRBody;
 
+    public GameObject Switch;
+    public manger Switches;
+
+
+    public void Awake()
+    {
+        Switch = GameObject.Find("Time");
+        Switches = Switch.GetComponent<manger>();
+        Switches.enemies.Add(this.gameObject);
+    }
+
 	// Use this for initialization
 	public virtual void Start ()
 	{
@@ -26,7 +37,6 @@ public class monster : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	/*
 	public virtual void Update () 
 	{
 		if(onLight)
@@ -36,22 +46,15 @@ public class monster : MonoBehaviour {
 		
 		if (Health <= 0)
 		{
+            Switches.enemies.Remove(this.gameObject);
 			Destroy(this.gameObject);
 		}
 		
 		
-		if (Timer >= 2f) 
-		{
-			RBody.velocity = new Vector2 (Random.Range (-1, 2), Random.Range (-1, 2));
-			Timer = 0;
-		} 
-		else 
-		{
-			Timer += Time.deltaTime;
-		}
+		
 
 	}
-    */
+  
 
 
 	void OnTriggerEnter2D(Collider2D coll)

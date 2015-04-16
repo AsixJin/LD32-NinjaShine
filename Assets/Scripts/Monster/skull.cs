@@ -3,18 +3,9 @@ using System.Collections;
 
 public class skull : monster {
 
-	void Update () 
+	public override void Update () 
 	{
-        if (onLight)
-        {
-            Health -= 1;
-        }
-
-        if (Health <= 0)
-        {
-            Destroy(this.gameObject);
-        }
-
+        base.Update();
         if(onLight)
         {
             PRBody = player.GetComponent<Rigidbody2D>();
