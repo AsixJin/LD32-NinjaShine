@@ -27,7 +27,7 @@ public class overlapTrans : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.transform.tag == "player")
+        if (col.transform.tag == "player" || col.transform.tag == "enemy")
         {
             render.color = new Color(render.color.r, render.color.g, render.color.b, trans);
         }      
@@ -35,7 +35,7 @@ public class overlapTrans : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if(col.transform.tag == "player")
+        if (col.transform.tag == "player" || col.transform.tag == "enemy")
         {
             render.color = new Color(render.color.r, render.color.g, render.color.b, 1);
         }      

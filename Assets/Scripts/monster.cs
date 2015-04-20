@@ -3,11 +3,16 @@ using System.Collections;
 
 public class monster : MonoBehaviour {
 
+    //Monster Variables
 	public float Health;
 	public float Timer;
 	public bool onLight;
-
+    public float speed;
+    //Monster Componenet
 	public Rigidbody2D RBody;
+    //Player GameObject & Components
+    public GameObject player;
+    public Transform target;
 
 	// Use this for initialization
 	void Start ()
