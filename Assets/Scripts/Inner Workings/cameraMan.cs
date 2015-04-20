@@ -19,7 +19,7 @@ public class cameraMan : MonoBehaviour {
     {   
 	    if(isFollowing)
         {
-            pos = new Vector3(target.transform.position.x, target.transform.position.y+0.91f, -10);
+            pos = new Vector3(target.transform.position.x, target.transform.position.y, -10);
             transform.position = pos;
         }
 	}

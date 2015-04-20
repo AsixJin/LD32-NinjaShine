@@ -4,9 +4,11 @@ using System.Collections;
 public class player : MonoBehaviour {
 
     //Player Component
-    private Rigidbody2D RBody;
+    public Rigidbody2D RBody;
 	private Animator Anim;
-    private GameObject theLight;
+    public GameObject theLight;
+    private GameObject childBright;
+    private Light lightComp;
 	private SpriteRenderer Light;
 	private Transform LightTrans;
     //For Player Control
@@ -21,6 +23,8 @@ public class player : MonoBehaviour {
     private float BTimer;
     public float energyRate = 0.01f;
     public bool isOn = false;
+    public bool shortage = false;
+    public int shortCount = 0;
 	public int direction;
     public float BeamLength = 1;
     public float BeamWidth = 1;
@@ -33,6 +37,8 @@ public class player : MonoBehaviour {
         RBody = GetComponent<Rigidbody2D>();
 		Anim = GetComponent<Animator>();
         theLight = GameObject.Find("Light");
+        childBright = GameObject.Find("childBright");
+        lightComp = childBright.GetComponent<Light>();
         theLight.SetActive(false);
 		Light = theLight.GetComponent<SpriteRenderer>();
 		LightTrans = theLight.GetComponent<Transform>();
@@ -42,10 +48,16 @@ public class player : MonoBehaviour {
     {
         //Controls the Light Size
         LightTrans.localScale = new Vector3(BeamLength, BeamWidth, 1);
+        lightComp.intensity = FlashEnergy*10;
 		//Controls the Light Power
         if(Input.GetButtonDown(LightSwitch))
         {
             FlashSwitch();
+        }
+
+        if(!isOn)
+        {
+            FlashEnergy += 0.0001f;
         }
 
         if(FlashEnergy <= 0)
@@ -53,9 +65,9 @@ public class player : MonoBehaviour {
             FlashEnergy = 0;
             isOn = false;
         }
-        else if(FlashEnergy >= 0.75f)
+        else if(FlashEnergy >= 0.80f)
         {
-            FlashEnergy = 0.75f;
+            FlashEnergy = 0.80f;
         }
                 
 		//Controls player movement
@@ -102,16 +114,39 @@ public class player : MonoBehaviour {
         //Time Related Light Control
         Light.color = new Color(Light.color.r, Light.color.g, Light.color.b, FlashEnergy);
         if(isOn)
-        {         
-            if(BTimer >= 2)
+        {   
+            if(!shortage)
             {
-                FlashEnergy -= energyRate;
-                BTimer = 0;
+                if (BTimer >= 2)
+                {
+                    FlashEnergy -= energyRate;
+                    BTimer = 0;
+                }
+                else
+                {
+                    BTimer += Time.deltaTime;
+                }
             }
             else
             {
-                BTimer += Time.deltaTime;
+                if (BTimer >= 0.5f)
+                {
+                    FlashSwitch();
+                    BTimer = 0;
+                    shortCount += 1;
+                }
+                else
+                {
+                    BTimer += Time.deltaTime;
+                }
             }
+            
+        }
+
+        if(shortCount == 6)
+        {
+            shortage = false;
+            shortCount = 0;
         }
     }
 

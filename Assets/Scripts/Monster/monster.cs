@@ -6,19 +6,23 @@ public class monster : MonoBehaviour {
     //Monster Variables
 	public float Health;
 	public float Timer;
-	public bool onLight;
+	public bool onLight = false;
     public float speed;
 	public bool isAlerted = false;
     //Monster Componenet
 	public Rigidbody2D RBody;
     //Player GameObject & Components
     public GameObject player;
+    public player ninjaGirl;
     public Transform target;
+    public Rigidbody2D PRBody;
 
 	// Use this for initialization
 	public virtual void Start ()
 	{
 		RBody = this.GetComponent<Rigidbody2D> ();
+        player = GameObject.Find("Ninja");
+        ninjaGirl = player.GetComponent<player>();
 	}
 
 	// Update is called once per frame
@@ -52,11 +56,19 @@ public class monster : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll)
 	{
-		onLight = true;
+        if(coll.transform.tag == "light")
+        {
+            onLight = true;
+        }
+		
 	}
 	
 	void OnTriggerExit2D(Collider2D coll)
 	{
-		onLight = false;
+        if (coll.transform.tag == "light")
+        {
+            onLight = false;
+        }
+		
 	}
 }

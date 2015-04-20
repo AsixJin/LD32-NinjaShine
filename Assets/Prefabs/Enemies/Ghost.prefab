@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e02c4ebd26074f349624da3faa225c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 0
+  Health: 3
   Timer: 0
   onLight: 0
   speed: 0
@@ -96,6 +96,8 @@ MonoBehaviour:
   RBody: {fileID: 0}
   player: {fileID: 0}
   target: {fileID: 0}
+  PRBody: {fileID: 0}
+  Floors: []
 --- !u!212 &21262798
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -106,7 +108,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: b1ccd889fb10efb4b844ccc70643f812, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1

@@ -5,22 +5,54 @@ public class skull : monster {
 
 	void Update () 
 	{
-	    if(!isAlerted)
+        if (onLight)
         {
-            if (Timer >= 2f)
+            Health -= 1;
+        }
+
+        if (Health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if(onLight)
+        {
+            PRBody = player.GetComponent<Rigidbody2D>();
+            RBody.velocity = PRBody.velocity*2;
+        }
+        else
+        {
+            PRBody = null;
+            if (!isAlerted)
             {
-                RBody.velocity = new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
-                Timer = 0;
+                if (Timer >= 2f)
+                {
+                    RBody.velocity = new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
+                    Timer = 0;
+                }
+                else
+                {
+                    Timer += Time.deltaTime;
+                }
             }
-            else
+            else if (isAlerted)
             {
-                Timer += Time.deltaTime;
+                target = player.GetComponent<Transform>();
+                this.transform.position = Vector3.MoveTowards(transform.position, target.position, speed);
             }
         }
-        else if(isAlerted)
+	   
+        if(!ninjaGirl.theLight.activeSelf)
         {
-            target = player.GetComponent<Transform>();
-            this.transform.position = Vector3.MoveTowards(transform.position, target.position, speed);
+            onLight = false;
         }
 	}
+
+    void OnCollisionEnter2D(Collision2D col)
+    { 
+        if(col.transform.tag == "player")
+        {
+            ninjaGirl.shortage = true;
+        }
+    }
 }
