@@ -1,18 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class radar : MonoBehaviour {
-
-    public GameObject skull;
-    public skull controller;
+	//Dictonary of all monster that use radar
+	public Dictionary<string, monster> MonsterLibrary = new Dictionary<string, monster>();
+	//Radar Variables
+    public GameObject attachedMon;
+	private monster monsterSet;
+    public monster controller;
 
     private CircleCollider2D radius;
 
 	// Use this for initialization
 	void Start () 
     {
-        skull = GameObject.Find("Skull");
-        controller = skull.GetComponent<skull>();
+		//Init the monster types that use radar
+		MonsterLibrary.Add ("Skull", (monster)skull);
+		MonsterLibrary.Add ("Ghost", (monster)ghost);
+		//Radar setting its variables for its attached objected
+        attachedMon = GameObject.Find("Skull");
+		monsterSet = (monster) MonsterLibrary ["Skull"];
+        controller = attachedMon.GetComponent<monsterSet>();
 
         radius = GetComponent<CircleCollider2D>();
 	}

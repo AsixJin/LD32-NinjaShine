@@ -4,7 +4,7 @@ using System.Collections;
 public class slime : monster {
 
 	// Update is called once per frame
-	public override void Update () 
+	void Update () 
     {
 	    if(onLight)
         {

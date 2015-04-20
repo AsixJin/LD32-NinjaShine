@@ -3,9 +3,7 @@ using System.Collections;
 
 public class skull : monster {
 
-    public bool isAlerted = false;
-
-	public override void Update () 
+	void Update () 
 	{
 	    if(!isAlerted)
         {

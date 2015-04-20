@@ -8,6 +8,7 @@ public class monster : MonoBehaviour {
 	public float Timer;
 	public bool onLight;
     public float speed;
+	public bool isAlerted = false;
     //Monster Componenet
 	public Rigidbody2D RBody;
     //Player GameObject & Components
@@ -15,12 +16,13 @@ public class monster : MonoBehaviour {
     public Transform target;
 
 	// Use this for initialization
-	void Start ()
+	public virtual void Start ()
 	{
 		RBody = this.GetComponent<Rigidbody2D> ();
 	}
 
 	// Update is called once per frame
+	/*
 	public virtual void Update () 
 	{
 		if(onLight)
@@ -43,9 +45,9 @@ public class monster : MonoBehaviour {
 		{
 			Timer += Time.deltaTime;
 		}
-		
-		
+
 	}
+    */
 
 
 	void OnTriggerEnter2D(Collider2D coll)
